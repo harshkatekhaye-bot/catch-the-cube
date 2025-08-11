@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Catch the Cube!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+    }
+    #gameArea {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    #cube {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: #00ffcc;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: top 0.3s, left 0.3s;
+    }
+    #scoreBoard {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 20px;
+    }
+    #timer {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="gameArea">
+    <div id="cube"></div>
+    <div id="scoreBoard">Score: 0</div>
+    <div id="timer">Time: 30</div>
+  </div>
+
+  <script>
+    const cube = document.getElementById("cube");
+    const scoreBoard = document.getElementById("scoreBoard");
+    const timerDisplay = document.getElementById("timer");
+    let score = 0;
+    let timeLeft = 30;
+
+    function moveCube() {
+      const x = Math.random() * (window.innerWidth - 60);
+      const y = Math.random() * (window.innerHeight - 60);
+      cube.style.left = `${x}px`;
+      cube.style.top = `${y}px`;
+    }
+
+    cube.addEventListener("click", () => {
+      score++;
+      scoreBoard.textContent = `Score: ${score}`;
+      moveCube();
+    });
+
+    function countdown() {
+      const timer = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `Time: ${timeLeft}`;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          cube.style.display = "none";
+          alert(`Time's up! Your score: ${score}`);
+        }
+      }, 1000);
+    }
+
+    moveCube();
+    countdown();
+  </script>
+</body>
+</html>
